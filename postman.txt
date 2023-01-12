@@ -1,0 +1,188 @@
+Category :
+{
+	"name": "Category 1"
+}
+
+Products :
+{
+    "name": "Product 1",
+    "description": "This is the first product",
+    "price": 5000,
+    "category_id": 1,
+    "image": "https://example.com/product1.jpg",
+    "quantity": 10
+}
+{
+    "name": "Product 2",
+    "description": "This is the second product",
+    "price": 6000,
+    "category_id": 2,
+    "image": "https://example.com/product2.jpg",
+    "quantity": 20
+}
+{
+    "name": "Product 3",
+    "description": "This is the third product",
+    "price": 7000,
+    "category_id": 3,
+    "image": "https://example.com/product3.jpg",
+    "quantity": 30
+}
+{
+    "name": "Product 4",
+    "description": "This is the fourth product",
+    "price": 8000,
+    "category_id": 4,
+    "image": "https://example.com/product4.jpg",
+    "quantity": 40
+}
+{
+    "name": "Product 5",
+    "description": "This is the fifth product",
+    "price": 9000,
+    "category_id": 5,
+    "image": "https://example.com/product5.jpg",
+    "quantity": 50
+}
+{
+    "name": "Product 6",
+    "description": "This is the sixth product",
+    "price": 10000,
+    "category_id": 6,
+    "image": "https://example.com/product6.jpg",
+    "quantity": 60
+}
+{
+    "name": "Product 7",
+    "description": "This is the seventh product",
+    "price": 11000,
+    "category_id": 7,
+    "image": "https://example.com/product7.jpg",
+    "quantity": 70
+}
+{
+    "name": "Product 8",
+    "description": "This is the eighth product",
+    "price": 12000,
+    "category_id": 8,
+    "image": "https://example.com/product8.jpg",
+    "quantity": 80
+}
+{
+    "name": "Product 9",
+    "description": "This is the ninth product",
+    "price": 13000,
+    "category_id": 9,
+    "image": "https://example.com/product9.jpg",
+    "quantity": 90
+}
+{
+    "name": "Product 10",
+    "description": "This is the tenth product",
+    "price": 14000,
+    "category_id": 10,
+    "image": "https://example.com/product10.jpg",
+    "quantity": 100
+}
+
+Transactions :
+{
+    "customer_id": 11,
+    "product_id": 3,
+    "quantity": 1,
+    "price": 20000,
+    "total_price": 20000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 1"
+}
+{
+    "customer_id": 12,
+    "product_id": 4,
+    "quantity": 2,
+    "price": 20000,
+    "total_price": 40000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 2"
+}
+{
+    "customer_id": 13,
+    "product_id": 5,
+    "quantity": 3,
+    "price": 20000,
+    "total_price": 60000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 3"
+}
+{
+    "customer_id": 14,
+    "product_id": 6,
+    "quantity": 4,
+    "price": 20000,
+    "total_price": 80000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 4"
+}
+{
+    "customer_id": 15,
+    "product_id": 7,
+    "quantity": 5,
+    "price": 20000,
+    "total_price": 100000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 5"
+}
+{
+    "customer_id": 16,
+    "product_id": 8,
+    "quantity": 6,
+    "price": 20000,
+    "total_price": 120000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 6"
+}
+{
+    "customer_id": 17,
+    "product_id": 9,
+    "quantity": 7,
+    "price": 20000,
+    "total_price": 140000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 7"
+}
+{
+    "customer_id": 18,
+    "product_id": 10,
+    "quantity": 8,
+    "price": 20000,
+    "total_price": 160000,
+    "status": "success",
+    "payment_method": "credit card",
+    "shipping_address": "Jl. Contoh 8"
+}
+{
+    "customer_id": 19,
+    "product_id": 11,
+    "quantity": 9,
+    "price": 20000,
+    "total_price": 180000,
+    "status": "success",
+	"payment_method": "credit card",
+	"shipping_address": "Jl. Contoh 9"
+}
+{
+	"customer_id": 20,
+	"product_id": 12,
+	"quantity": 10,
+	"price": 20000,
+	"total_price": 200000,
+	"status": "success",
+	"payment_method": "credit card",
+	"shipping_address": "Jl. Contoh 10"
+}
