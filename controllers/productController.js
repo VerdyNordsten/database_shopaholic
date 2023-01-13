@@ -11,8 +11,13 @@ const productController = {
       const offset = (page - 1) * limit
       const sortBY = req.query.sortBY || 'name'
       const sort = req.query.sort || 'ASC'
-      const searchParam = req.query.search || ''
+      const searchParam = req.query.search ? req.query.search.toLowerCase() : ''
       const result = await productModel.selectAllProduct(limit, offset, searchParam, sortBY, sort)
+      if(result.rowCount === 0) {
+        return res.json({
+        message: 'Data not found'
+        });
+        }
       const {
         rows: [count]
       } = await productModel.countData()
@@ -47,48 +52,86 @@ const productController = {
   },
 
   createProduct: async (req, res) => {
-    const { rows: [count] } = await productModel.countData()
-    const id = Number(count.count) + 1
-    const { name, description, price, category_id, image, quantity } = req.body
-    const data = {
-      id,
-      name,
-      description,
-      price,
-      category_id,
-      image,
-      quantity
+    try{
+        const { name, description, price, category_id, image, quantity } = req.body;
+        const checkName = await productModel.findName(name.toLowerCase());
+        if (checkName.rowCount > 0) {
+            return res.json({
+                message: 'Product Name already exist'
+            });
+        }
+        const data = {
+          name,
+          description,
+          price,
+          category_id,
+          image,
+          quantity
+        }
+        const result = await productModel.insertProduct(data);
+        commonHelper.response(res, result.rows, 201, 'Product has been added')
+    }catch(err){
+        res.send(err)
     }
-    // validate data here
-    productModel.insertProduct(data)
-      .then((result) => {
-        commonHelper.response(res, result.rows, 201, 'Product created')
-      })
-      .catch((err) => res.send(err))
   },
 
   updateProduct: async (req, res) => {
     try {
       const id = Number(req.params.id)
       const { name, description, price, category_id, image, quantity } = req.body
+      const checkName = await productModel.findName(name);
+      if (checkName.rowCount > 0) {
+          return res.json({
+              message: 'Product Name already exist'
+          });
+      }
       const { rowCount } = await productModel.findId(id)
       if (!rowCount) {
         return res.json({
-          Message: 'data not found'
+          message: 'Product not found'
         })
       }
-      const data = {
-        id,
-        name,
-        description,
-        price,
-        category_id,
-        image,
-        quantity
+      let data = {};
+      let updateQuery = '';
+      let message = 'Product updated';
+      if (name) {
+        data.name = name;
+        updateQuery += `name=$${Object.keys(data).length}`;
+        message = 'name ' + message;
       }
-      productModel.updateProduct(data)
-        .then((result) => {
-          commonHelper.response(res, result.rows, 200, 'Product updated')
+      if (description) {
+        data.description = description;
+        updateQuery += `${updateQuery ? ', ' : ''}description=$${Object.keys(data).length}`;
+        message = 'description ' + message;
+      }
+      if (price) {
+        data.price = price;
+        updateQuery += `${updateQuery ? ', ' : ''}price=$${Object.keys(data).length}`;
+        message = 'price ' + message;
+      }
+      if (category_id) {
+        data.category_id = category_id;
+        updateQuery += `${updateQuery ? ', ' : ''}category_id=$${Object.keys(data).length}`;
+        message = 'category_id ' + message;
+      }
+      if (image) {
+        data.image = image;
+        updateQuery += `${updateQuery ? ', ' : ''}image=$${Object.keys(data).length}`;
+        message = 'image ' + message;
+      }
+      if (quantity) {
+        data.quantity = quantity;
+        updateQuery += `${updateQuery ? ', ' : ''}quantity=$${Object.keys(data).length}`;
+        message = 'quantity ' + message;
+      }
+      data.id = id;
+      productModel.updateProduct(updateQuery, data)
+        .then(() => {
+          productModel.findId(id)
+            .then((product) => {
+              commonHelper.response(res, product.rows[0], 200, message)
+            })
+            .catch((err) => res.send(err))
         })
         .catch((err) => res.send(err))
     } catch (error) {
@@ -102,13 +145,13 @@ const productController = {
       const { rowCount } = await productModel.findId(id)
       if (!rowCount) {
         return res.json({
-          Message: 'data not found'
+          Message: 'Product not found'
         })
       }
       productModel
         .deleteProduct(id)
         .then((result) => {
-          commonHelper.response(res, result.rows, 200, 'Product deleted')
+          commonHelper.response(res, result.rows, 200, 'Product has been deleted')
         })
         .catch((err) => res.send(err))
     } catch (error) {

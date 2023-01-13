@@ -11,8 +11,13 @@ const categoryController = {
       const offset = (page - 1) * limit
       const sortBY = req.query.sortBY || 'name'
       const sort = req.query.sort || 'ASC'
-      const searchParam = req.query.search || ''
-      const result = await categoryModel.selectAllCategory(limit, offset, searchParam, sortBY, sort)
+      const searchParam = req.query.search ? req.query.search.toLowerCase() : ''
+      const result = await productModel.selectAllProduct(limit, offset, searchParam, sortBY, sort)
+      if(result.rowCount === 0) {
+        return res.json({
+        message: 'Data not found'
+        });
+        }
       const {
         rows: [count]
       } = await categoryModel.countData()
@@ -35,7 +40,7 @@ const categoryController = {
     const { rowCount } = await categoryModel.findId(id)
     if (!rowCount) {
       return res.json({
-        Message: 'data not found'
+        Message: 'Category not found'
       })
     }
     categoryModel
@@ -47,44 +52,60 @@ const categoryController = {
   },
 
   createCategory: async (req, res) => {
-    const { rows: [count] } = await categoryModel.countData()
-    const id = Number(count.count) + 1
-    const { name } = req.body
-    const data = {
-      id,
-      name
+    try {
+        const { name } = req.body;
+        const checkName = await categoryModel.findName(name);
+        if (checkName.rowCount > 0) {
+            throw new Error('Name Category already exist');
+        }
+        const data = {
+            name
+        }
+        const result = await categoryModel.insertCategory(data);
+        commonHelper.response(res, result.rows, 201, 'Category has been created');
+    } catch (err) {
+        res.json({ message: err.message });
     }
-    // validate data here
-    categoryModel.insertCategory(data)
-      .then((result) => {
-        commonHelper.response(res, result.rows, 201, 'Category created')
+},
+
+updateCategory: async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const { name } = req.body
+    const checkName = await categoryModel.findName(name);
+    if (checkName.rowCount > 0) {
+        return res.json({
+            message: 'Category Name already exist'
+        });
+    }
+    const { rowCount } = await categoryModel.findId(id)
+    if (!rowCount) {
+      return res.json({
+        message: 'Category not found'
+      })
+    }
+    let data = {};
+    let updateQuery = '';
+    let message = 'Category updated';
+    if (name) {
+      data.name = name;
+      updateQuery += `name=$${Object.keys(data).length}`;
+      message = 'name ' + message;
+    }
+    data.id = id;
+    categoryModel.updateCategory(updateQuery, data)
+      .then(() => {
+        categoryModel.findId(id)
+          .then((category) => {
+            commonHelper.response(res, category.rows[0], 200, message)
+          })
+          .catch((err) => res.send(err))
       })
       .catch((err) => res.send(err))
-  },
-
-  updateCategory: async (req, res) => {
-    try {
-      const id = Number(req.params.id)
-      const { name } = req.body
-      const { rowCount } = await categoryModel.findId(id)
-      if (!rowCount) {
-        return res.json({
-          Message: 'data not found'
-        })
-      }
-      const data = {
-        id,
-        name
-      }
-      categoryModel.updateCategory(data)
-        .then((result) => {
-          commonHelper.response(res, result.rows, 200, 'Category updated')
-        })
-        .catch((err) => res.send(err))
-    } catch (error) {
-      console.log(error)
-    }
-  },
+  } catch (error) {
+    console.log(error)
+  }
+},
 
   deleteCategory: async (req, res) => {
     try {
@@ -92,13 +113,13 @@ const categoryController = {
       const { rowCount } = await categoryModel.findId(id)
       if (!rowCount) {
         return res.json({
-          Message: 'data not found'
+          Message: 'Category not found'
         })
       }
       categoryModel
         .deleteCategory(id)
         .then((result) => {
-          commonHelper.response(res, result.rows, 200, 'Category deleted')
+          commonHelper.response(res, result.rows, 200, 'Category has been deleted')
         })
         .catch((err) => res.send(err))
     } catch (error) {

@@ -2,22 +2,21 @@
 const Pool = require('../config/db')
 
 const selectAllProduct = (limit, offset, searchParam, sortBY, sort) => {
-  return Pool.query(`SELECT * FROM products WHERE name LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset}`)
+  return Pool.query(`SELECT * FROM products WHERE lower(name) LIKE '%${searchParam}%' ORDER BY ${sortBY} ${sort} LIMIT ${limit} OFFSET ${offset}`)
 }
 
 const selectProduct = (id) => {
   return Pool.query(`SELECT * FROM products WHERE id=${id}`)
 }
 
-const insertProduct = (data) => {
-  const { id, name, description, price, category_id, image, quantity } = data
-  return Pool.query(`INSERT INTO products(id,name,description,price,category_id,image,quantity) VALUES(${id},'${name}','${description}',${price},${category_id},'${image}',${quantity})`)
+const insertProduct = async (data) => {
+  return await Pool.query('INSERT INTO products (name, description, price, category_id, image, quantity) VALUES ($1, $2, $3, $4, $5, $6)', [data.name, data.description, data.price, data.category_id, data.image, data.quantity]);
 }
 
-const updateProduct = (data) => {
-  const { id, name, description, price, category_id, image, quantity } = data
+const updateProduct = (updateQuery, data) => {
   return Pool.query(
-    `UPDATE products SET name='${name}', description='${description}', price=${price}, category_id=${category_id}, image='${image}', quantity=${quantity} WHERE id=${id}`
+    `UPDATE products SET ${updateQuery} WHERE id=$${Object.keys(data).length}`,
+    Object.values(data)
   )
 }
 
@@ -41,6 +40,10 @@ const findId = (id) => {
   )
 }
 
+const findName = (name) => {
+  return Pool.query('SELECT * FROM products WHERE name = $1', [name]);
+}
+
 module.exports = {
   selectAllProduct,
   selectProduct,
@@ -48,5 +51,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   countData,
-  findId
+  findId,
+  findName
 }

@@ -186,3 +186,85 @@ Transactions :
 	"payment_method": "credit card",
 	"shipping_address": "Jl. Contoh 10"
 }
+
+Customer :
+{
+    "name": "Jane Doe",
+    "email": "janedoe@example.com",
+    "password": "password456",
+    "phone": "098-765-4321",
+    "address": "456 Park Ave",
+    "dob": "1995-05-05"
+}
+{
+    "name": "Bob Smith",
+    "email": "bobsmith@example.com",
+    "password": "password789",
+    "phone": "111-111-1111",
+    "address": "789 Elm St",
+    "dob": "1985-12-31"
+}
+{
+    "name": "Emily Johnson",
+    "email": "emilyjohnson@example.com",
+    "password": "password000",
+    "phone": "222-222-2222",
+    "address": "000 Oak St",
+    "dob": "1980-01-01"
+}
+{
+    "name": "Michael Brown",
+    "email": "michaelbrown@example.com",
+    "password": "password111",
+    "phone": "333-333-3333",
+    "address": "111 Maple St",
+    "dob": "1988-07-04"
+}
+{
+    "name": "Jessica Davis",
+    "email": "jessicadavis@example.com",
+    "password": "password222",
+    "phone": "444-444-4444",
+    "address": "222 Pine St",
+    "dob": "1992-11-11"
+}
+{
+    "name": "Jacob Miller",
+    "email": "jacobmiller@example.com",
+    "password": "password333",
+    "phone": "555-555-5555",
+    "address": "333 Cedar St",
+    "dob": "1995-03-03"
+}
+{
+    "name": "Emily Taylor",
+    "email": "emilytaylor@example.com",
+    "password": "password444",
+    "phone": "666-666-6666",
+    "address": "444 Birch St",
+    "dob": "1989-09-09"
+}
+{
+    "name": "Nicholas Anderson",
+    "email": "nicholasanderson@example.com",
+    "password": "password555",
+    "phone": "777-777-7777",
+    "address": "555 Willow St",
+    "dob": "1987-12-12"
+}
+{
+    "name": "Sarah Thomas",
+    "email": "sarahthomas@example.com",
+    "password": "password666",
+    "phone": "888-888-8888",
+    "address": "666 Oak St",
+    "dob": "1984-04-04"
+}
+{
+    "name": "Anthony Hernandez",
+    "email": "anthonyhernandez@example.com",
+    "password": "password777",
+    "phone": "999-999-9999",
+    "address": "777 Elm St",
+    "dob": "1987-12-12"
+}
