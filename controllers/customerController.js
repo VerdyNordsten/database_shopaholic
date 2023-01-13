@@ -15,7 +15,7 @@ const customerController = {
       const sortBY = req.query.sortBY || 'name'
       const sort = req.query.sort || 'ASC'
       const searchParam = req.query.search ? req.query.search.toLowerCase() : ''
-      const result = await productModel.selectAllProduct(limit, offset, searchParam, sortBY, sort)
+      const result = await customerModel.selectAllCustomer(limit, offset, searchParam, sortBY, sort)
       if(result.rowCount === 0) {
         return res.json({
         message: 'Data not found'
