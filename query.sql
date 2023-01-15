@@ -22,7 +22,7 @@ ADD FOREIGN KEY (category_id) REFERENCES categories(id);
 
 -- Create table transactions
 CREATE TABLE transactions (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     customer_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
@@ -32,6 +32,8 @@ CREATE TABLE transactions (
     payment_method VARCHAR(255) NOT NULL,
     shipping_address TEXT
 );
+
+ALTER TABLE transactions ADD COLUMN create_at TIMESTAMP, ADD COLUMN update_at TIMESTAMP;
 
 -- Create table customers
 CREATE TABLE customers (

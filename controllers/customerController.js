@@ -54,7 +54,11 @@ const customerController = {
     customerModel
       .selectCustomer(id)
       .then((result) => {
-        commonHelper.response(res, result.rows[0], 200, 'get data success')
+        const data = {
+          ...result.rows[0],
+          dob: moment(result.rows[0].dob).format("YYYY-MM-DD")
+        }
+        commonHelper.response(res, data, 200, 'get data success')
       })
       .catch((err) => res.send(err))
   },
