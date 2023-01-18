@@ -6,12 +6,12 @@ CREATE TABLE categories (
 
 -- Create table products
 CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     price INT NOT NULL,
-    category_id INT NOT NULL,
-    image VARCHAR(255),
+    stock INT NOT NULL,
+    image VARCHAR(255) NOT NULL,
     quantity INT NOT NULL
 );
 
@@ -45,6 +45,18 @@ CREATE TABLE customers (
     phone VARCHAR(255),
     dob DATE DEFAULT '1970-01-01'
 );
+
+CREATE TABLE users (
+    id VARCHAR PRIMARY KEY,
+    fullname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    address TEXT DEFAULT 'N/A',
+    phone VARCHAR(255),
+    dob DATE DEFAULT '1970-01-01',
+    role VARCHAR NOT NULL
+);
+
 
 -- Add foreign key to transactions.customer_id
 ALTER TABLE transactions

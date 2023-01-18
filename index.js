@@ -12,9 +12,12 @@ const port = process.env.PORT
 app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
-app.use('/', mainRouter)
 app.use(helmet())
 app.use(xss())
+
+app.use('/api/v1', mainRouter)
+
+app.use('/img', express.static('upload'))
 
 app.all('*', (req, res, next) => {
   next(new createError.NotFound())

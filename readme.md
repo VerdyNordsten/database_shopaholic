@@ -1,3 +1,13 @@
+
+## Database Shopaholic
+Latihan Backend membuat aplikasi e-commerce sederhana menggunakan Node.js dan PostgreSQL.
+
+## Features
+Autentikasi pengguna menggunakan bcrypt dan jsonwebtoken
+Validasi input menggunakan xss-clean
+Logging request dan response menggunakan morgan
+Proteksi dari serangan HTTP menggunakan helmet
+
 # List third party module
 | Thrid Party | npm install |
 | ------ | ------ |
@@ -11,7 +21,9 @@
 | [Http-errors] | npm i http-errors |
 
 
+## Technologies
 
+This project is built with the following technologies:
 
 [express]: <http://expressjs.com>
 [Nodemon]: <https://www.npmjs.com/package/nodemon>
@@ -24,11 +36,15 @@
 
 
 
-## Installation
+## Getting Started
 
-- npm install
-- npm run dev or npm run server
+1. Clone this repository `git clone https://github.com/verdy-nordsten/database-shopaholic.git`
+2. Instal dependencies `npm install`
+3. Buat file .env dan sesuaikan dengan environment Anda
+4. Start the development server: `npm run dev`
 
-## Debug
+## Demo
 
-- npm run lint
+You can see a live demo of the database at [databaseshopaholic.up.railway.app/](https://databaseshopaholic.up.railway.app/).
+
+MIT License. Developed By Verdy Nordsten.

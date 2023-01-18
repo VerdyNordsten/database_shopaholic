@@ -1,23 +1,29 @@
-require('dotenv').config()
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken")
+const createError = require("http-errors")
 
-const tokenVerify = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   try {
-    const token = req.headers?.authorization
-    if (!token) {
-      return res.status(403).send({
-        message: `please login to access`,
-        err: `forbidden`,
+    let token
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(" ")[1]
+      let decoded = await jwt.verify(token, process.env.SECRET_KEY_JWT)
+      req.payload = decoded
+      next()
+    } else {
+      return res.status(401).json({
+        message: "Unauthorized, Please provide valid token",
       })
     }
-    const decoded = jwt.verify(token?.substring(7, token?.length), process.env.JWT_SECRET)
-    if (decoded) return next()
-  } catch (err) {
-    return res.status(401).send({
-      message: `Invalid token access`,
-      err: `Unauthorized`,
-    })
+  } catch (error) {
+    console.log(error)
+    if (error && error.name === "JsonWebTokenError") {
+      return next(new createError(401, "Token invalid"))
+    } else if (error && error.name === "TokenExpiredError") {
+      return next(new createError(401, "Token expired"))
+    } else {
+      return next(new createError(401, "Token not active"))
+    }
   }
 }
 
-module.exports = { tokenVerify }
+module.exports = { verifyToken }

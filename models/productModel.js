@@ -6,11 +6,12 @@ const selectAllProduct = (limit, offset, searchParam, sortBY, sort) => {
 }
 
 const selectProduct = (id) => {
-  return Pool.query(`SELECT * FROM products WHERE id=${id}`)
+  return Pool.query(`SELECT * FROM products WHERE id='${id}'`)
 }
 
-const insertProduct = async (data) => {
-  return await Pool.query('INSERT INTO products (name, description, price, category_id, image, quantity) VALUES ($1, $2, $3, $4, $5, $6)', [data.name, data.description, data.price, data.category_id, data.image, data.quantity]);
+const insertProduct = (data) =>{
+  const { id, name, stock, price, image, description, quantity} = data;
+  return Pool.query(`INSERT INTO products(id, name, stock, price, image, description, quantity) VALUES('${id}','${name}',${stock},${price},'${image}','${description}',${quantity})`);
 }
 
 const updateProduct = (updateQuery, data) => {
@@ -30,7 +31,7 @@ const countData = () => {
 
 const findId = (id) => {
   return new Promise((resolve, reject) =>
-    Pool.query(`SELECT id FROM products WHERE id=${id}`, (error, result) => {
+    Pool.query(`SELECT id FROM products WHERE id='${id}'`, (error, result) => {
       if (!error) {
         resolve(result)
       } else {
